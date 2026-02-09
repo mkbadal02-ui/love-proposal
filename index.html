@@ -1,34 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
-
+<title>For Ritika ❤️</title>
 <style>
-body { background: pink; text-align: center; font-family: Arial; height: 100vh; overflow: hidden; }
-h1 { margin-top: 100px; font-size: 28px; }
-button { font-size: 20px; padding: 10px 25px; margin: 20px; border: none; border-radius: 10px; cursor: pointer; }
-#yes { background: red; color: white; }
-#no { background: white; position: absolute; }
+body{
+  font-family: Arial, sans-serif;
+  text-align:center;
+  background:#ffe6f0;
+  padding:30px;
+  overflow-x:hidden;
+}
+h1{color:#e60073;}
+button{
+  padding:10px 20px;
+  font-size:18px;
+  margin:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+#yes{background:#ff4d88;color:white;}
+#no{background:#ccc;}
+#box{
+  font-size:22px;
+  margin-top:30px;
+}
+.big{
+  font-size:40px;
+  color:red;
+}
+
+/* Confetti pieces */
+.confetti{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background-color: #ff3399;
+  top:0;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall{
+  0%{top:0;}
+  100%{top:100vh;}
+}
 </style>
 </head>
+
 <body>
-<h1>Will you be my wife, Ritika? 💍</h1>
-<button id="yes" onclick="yesClicked()">YES ❤️</button>
-<button id="no" onmouseover="moveNo()">NO 💔</button>
+
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop autoplay></audio>
+
+<div id="start">
+  <h1>Will you be my wife Ritika? ❤️</h1>
+  <button id="yes" onclick="startMessages()">YES</button>
+  <button id="no" onmouseover="moveNo()">NO</button>
+</div>
+
+<div id="messages" style="display:none;">
+  <div id="box"></div>
+  <button onclick="prev()">⬅️ Back</button>
+  <button onclick="next()">Next ❤️</button>
+</div>
 
 <script>
-function moveNo() {
-  var x = Math.random() * (window.innerWidth - 100);
-  var y = Math.random() * (window.innerHeight - 100);
-  document.getElementById("no").style.left = x + "px";
-  document.getElementById("no").style.top = y + "px";
+let msgs = [
+"I knew it 😍❤️ Love you forever 💕",
+"Tumne mera dil chura liya… aur police ko bulaane ka mood nahi 😜💖",
+"Tumhari smile pe mera dil gir jaata hai 😄❤️",
+"You + Me = Trouble aur cuddles 😏💞",
+"Mujhe lagta hai maine apni favorite weirdo find kar li 😍😂",
+"Tumhari aankhon me magic hai, aur main totally hypnotized 😍✨",
+"I’m addicted… tumhare pyar aur tumhare memes 😎❤️",
+"Tum meri GPS ho… hamesha right path dikhaati ho ❤️🗺️",
+"Ritika, tumhare liye phone check karna mera favourite kaam hai 😍📱",
+"Forever yours… aur haan, jab tum mere fries churaogi tab bhi 🍟❤️"
+];
+
+let i = 0;
+
+function startMessages(){
+  document.getElementById("start").style.display="none";
+  document.getElementById("messages").style.display="block";
+  show();
 }
 
-function yesClicked() {
-  document.body.innerHTML = "<h1>I knew it 😍❤️<br>Love you forever 💕</h1>";
+function show(){
+  if(i < msgs.length){
+    document.getElementById("box").innerText = msgs[i];
+  } else {
+    document.getElementById("box").innerHTML =
+    "<div class='big'>I LOVE YOU RITIKA ❤️❤️❤️</div>";
+    confettiEffect();
+  }
+}
+
+function next(){
+  i++;
+  show();
+}
+
+function prev(){
+  if(i>0){ i--; }
+  show();
+}
+
+function moveNo(){
+  let x = Math.random()*200;
+  let y = Math.random()*200;
+  document.getElementById("no").style.transform =
+  `translate(${x}px,${y}px)`;
+}
+
+// Confetti animation
+function confettiEffect(){
+  for(let j=0;j<100;j++){
+    let conf = document.createElement("div");
+    conf.className="confetti";
+    conf.style.left = Math.random()*window.innerWidth + "px";
+    conf.style.backgroundColor = "hsl("+Math.random()*360+",100%,50%)";
+    document.body.appendChild(conf);
+    setTimeout(()=>{conf.remove()},3000);
+  }
 }
 </script>
+
 </body>
 </html>
-<!-- ok -->
